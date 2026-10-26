@@ -48,9 +48,24 @@ if (piano) {
     piano.appendChild(k); keys[m] = k;
   }
 
+  /* Zvuk na telefonima: iPhone/Android puštaju zvuk tek posle dodira, a iPhone
+     ga po difoltu utišava kad je uključen nečujni režim. Zato zvuk "otključavamo"
+     pri prvom dodiru i tražimo režim reprodukcije (kao muzička aplikacija). */
   let ctx;
+  function audio() {
+    if (!ctx) {
+      try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch (e) {}
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const b = ctx.createBuffer(1, 1, 22050), s = ctx.createBufferSource();
+      s.buffer = b; s.connect(ctx.destination); s.start(0);
+    }
+    if (ctx.state !== "running") ctx.resume();
+    return ctx;
+  }
+  ["touchend", "click", "keydown"].forEach(ev => document.addEventListener(ev, audio, { passive: true }));
+
   function tone(m, dur = .5) {
-    ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+    audio();
     const f = 440 * Math.pow(2, (m - 69) / 12), t = ctx.currentTime, g = ctx.createGain();
     g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.28, t + .01); g.gain.exponentialRampToValueAtTime(.001, t + dur + .6);
     [[1, "triangle", 1], [2, "sine", .25], [3, "sine", .08]].forEach(([h, type, a]) => {
@@ -60,7 +75,7 @@ if (piano) {
     g.connect(ctx.destination);
     const k = keys[m]; if (k) { k.classList.add("on"); setTimeout(() => k.classList.remove("on"), Math.max(dur * 700, 160)); }
   }
-  piano.addEventListener("pointerdown", e => { const m = e.target.dataset.m; if (m) tone(+m); });
+  piano.addEventListener("pointerdown", e => { const m = e.target.dataset.m; if (m) { e.preventDefault(); tone(+m); } });
 
   /* vežbe: koraci u polustepenima od osnovnog tona + slogovi */
   const EX = {
