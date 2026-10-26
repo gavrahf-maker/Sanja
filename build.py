@@ -121,7 +121,6 @@ home = f'''<section class="hero"><div class="wrap hero-grid">
   <div class="hero-photo"><img src="img/klavir.jpg" alt="Otvorene note na klaviru, iza njih mehanika klavira i osušeni božur">
     <div class="hero-badge"><span class="live-dot" aria-hidden="true"></span><span><strong>{TEACHER}</strong><br>vokalni pedagog, Beč</span></div></div>
 </div></section>
-<div class="keystrip" aria-hidden="true"></div>
 <div class="facts"><div class="wrap">
   <div class="fact"><b>15 godina</b><span>podučavanja vokalne tehnike</span></div>
   <div class="fact"><b>od 2004.</b><span>profesionalno peva</span></div>
@@ -179,7 +178,7 @@ page("index.html", None, "Online časovi pevanja za decu i odrasle sa MA Sanjom 
 about = page_hero("O Sanji", "Glas, scena i 15 godina u učionici.", "Vokalni pedagog, online profesorka pevanja i predavač vokalne tehnike. Živi i radi u Beču, a predaje učenicima na svim kontinentima.") + f'''
 <section><div class="wrap split">
   <div style="display:grid;gap:14px">
-    <div class="photo-ph">Ovde ide Sanjina fotografija<br>(sa starog sajta ili nova)</div>
+    <figure class="about-photo"><img src="img/sanja.jpg" alt="Sanja Trifunović Gerginov pored klavijature, sa peharom" loading="lazy"></figure>
   </div>
   <div class="prose">
     <p><strong>{TEACHER}</strong> profesionalno se bavi pevanjem od 2004. godine. Priznati je vokalni izvođač, sa nagradama u zemlji i inostranstvu.</p>
