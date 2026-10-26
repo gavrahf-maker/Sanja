@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vežbaonica · Časovi pevanja sa Sanjom</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Interaktivna klavijatura sa vežbama za zagrevanje glasa.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="nav"><div class="wrap">
+  <a class="logo" href="index.html"><span class="logo-keys" aria-hidden="true"><i></i><i></i><i></i></span><span>Časovi pevanja<small>sa Sanjom · online</small></span></a>
+  <nav class="nav-links" aria-label="Glavna navigacija"><a href="index.html">Početna</a><a href="o-sanji.html">O Sanji</a><a href="kursevi.html">Kursevi i cene</a><a href="vezbaonica.html" aria-current="page">Vežbaonica<span class="new">novo</span></a><a href="saveti.html">Pevački saveti</a><a href="utisci.html">Utisci</a></nav>
+  <a class="btn btn-rose cta-top" href="prijava.html">Prijavi se</a>
+  <button class="menu-btn" type="button" aria-expanded="false">Meni</button>
+</div></header>
+<main>
+<section class="dark" style="padding-top:clamp(40px,6vw,80px)"><div class="wrap piano-panel">
+  <div class="sec-head" style="margin-bottom:6px"><span class="eyebrow">Vežbaonica</span>
+    <h1 style="font-size:clamp(2.4rem,6vw,4.4rem);font-weight:800;letter-spacing:-.04em">Zagrej glas uz klavir.</h1>
+    <p class="lead">Izaberi vežbu i početni ton, pa pritisni Pokreni. Pevaj slogove dok klavir svira. Posle svakog kruga vežba se podiže za pola stepena. Dirke možeš i sam da sviraš.</p></div>
+  <div class="exercises">
+    <button class="ex" type="button" data-ex="lestvica" aria-pressed="true"><b>Lestvica do kvinte</b><span>do · re · mi · fa · sol · fa · mi · re · do</span></button>
+    <button class="ex" type="button" data-ex="trozvuk" aria-pressed="false"><b>Razloženi akord</b><span>ma · ma · ma · ma (do · mi · sol · do)</span></button>
+    <button class="ex" type="button" data-ex="vokali" aria-pressed="false"><b>Vokali na jednom tonu</b><span>mi · me · ma · mo · mu</span></button>
+  </div>
+  <div class="piano-scroll"><div class="piano" id="piano" aria-label="Klavijatura od C3 do C6"></div></div>
+  <div class="controls">
+    <button class="btn btn-rose" id="play" type="button">▶ Pokreni</button>
+    <button class="btn btn-ghost" id="stop" type="button">■ Stani</button>
+    <label class="ctrl" for="start">Početni ton <select id="start"><option value="48">C3 · niži muški</option><option value="53">F3</option><option value="55">G3</option><option value="57">A3</option><option value="60" selected>C4 · srednji</option><option value="62">D4</option><option value="65">F4 · viši ženski</option><option value="67">G4</option></select></label>
+    <label class="ctrl" for="tempo">Tempo <input id="tempo" type="range" min="60" max="160" value="110"></label>
+  </div>
+  <p class="solf" id="solf" aria-live="polite"></p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-head"><span class="eyebrow">Pre nego što počneš</span><h2>Tri pravila za zdravo zagrevanje.</h2></div>
+  <div class="grid-3">
+    <div class="card"><span class="tagline">disanje</span><h3>Vazduh je gorivo</h3><p>Udahni mirno i duboko pre svake fraze. Bez vazduha nema pevanja.</p><a class="textlink" href="clanak.html" style="justify-self:start">Pravilno disanje</a></div>
+    <div class="card"><span class="tagline">držanje</span><h3>Opušteno telo</h3><p>Stani prirodno, ramena dole, vrat slobodan. Napet mišić znači napet ton.</p><a class="textlink" href="clanak.html" style="justify-self:start">Držanje tela</a></div>
+    <div class="card"><span class="tagline">mera</span><h3>Bez forsiranja</h3><p>Kad ton postane težak, stani i vrati se na početni ton. Visina dolazi sa vežbom.</p></div>
+  </div>
+  <p class="ph-note" style="margin-top:28px">ŠABLON: Sanja proverava vežbe i savete; po želji dodajemo nove vežbe (npr. sirena, staccato, intervali).</p>
+</div></section><section class="dark"><div class="wrap cta-band">
+  <h2>Svoju blistavu budućnost stvaraš ti.</h2>
+  <div class="btn-row"><a class="btn btn-rose" href="prijava.html">Prijavi se i zakaži čas</a><a class="btn btn-ghost" href="kursevi.html">Pogledaj kurseve</a></div>
+</div></section>
+</main>
+<footer><div class="wrap">
+  <div class="cols">
+    <div style="display:grid;gap:14px;align-content:start">
+      <span class="logo"><span class="logo-keys" aria-hidden="true"><i></i><i></i><i></i></span><span>Časovi pevanja<small>sa Sanjom · online</small></span></span>
+      <p style="opacity:.75;max-width:40ch;font-size:.94rem">Online časovi pevanja za decu i odrasle, na srpskom, engleskom i nemačkom jeziku.</p>
+    </div>
+    <div><h4>Sajt</h4><ul>
+      <li><a href="o-sanji.html">O Sanji</a></li><li><a href="kursevi.html">Kursevi i cene</a></li>
+      <li><a href="prijava.html">Prijava</a></li><li><a href="vezbaonica.html">Vežbaonica</a></li>
+      <li><a href="saveti.html">Pevački saveti</a></li><li><a href="utisci.html">Utisci</a></li></ul></div>
+    <div><h4>Kontakt i mreže</h4><ul>
+      <li>Email: <span class="ph-inline">[dodati]</span></li>
+      <li>Instagram: <span class="ph-inline">[dodati]</span></li>
+      <li>TikTok: <span class="ph-inline">[dodati]</span></li>
+      <li><a href="https://www.youtube.com/watch?v=kQUhk-6FKRM" target="_blank" rel="noopener">YouTube ↗</a></li></ul></div>
+  </div>
+  <div class="bottom"><span>© <span data-year>2026</span> Časovi pevanja sa Sanjom. Sva prava zadržana.</span>
+    <span><a href="privatnost.html">Politika privatnosti</a> · <a href="uslovi.html">Uslovi korišćenja</a></span></div>
+</div></footer>
+<script src="site.js"></script>
+</body>
+</html>

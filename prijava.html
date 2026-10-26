@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prijava · Časovi pevanja sa Sanjom</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Prijava za online časove pevanja kod MA Sanje Trifunović Gerginov.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="nav"><div class="wrap">
+  <a class="logo" href="index.html"><span class="logo-keys" aria-hidden="true"><i></i><i></i><i></i></span><span>Časovi pevanja<small>sa Sanjom · online</small></span></a>
+  <nav class="nav-links" aria-label="Glavna navigacija"><a href="index.html">Početna</a><a href="o-sanji.html">O Sanji</a><a href="kursevi.html">Kursevi i cene</a><a href="vezbaonica.html">Vežbaonica<span class="new">novo</span></a><a href="saveti.html">Pevački saveti</a><a href="utisci.html">Utisci</a></nav>
+  <a class="btn btn-rose cta-top" href="prijava.html">Prijavi se</a>
+  <button class="menu-btn" type="button" aria-expanded="false">Meni</button>
+</div></header>
+<main>
+<section class="page-hero"><div class="wrap">
+  <span class="eyebrow">Prijava</span><h1>Prijavi se i zakaži čas.</h1><p class="lead">Popuni prijavu i pošalji. Na email ti stižu sve informacije i slobodni termini.</p></div></section>
+<section><div class="wrap split">
+  <div class="prose" style="align-content:start">
+    <span class="eyebrow">Šta se dešava posle</span>
+    <ul class="creds">
+      <li><span class="yr">korak 1</span><span>Šalješ prijavu</span></li>
+      <li><span class="yr">korak 2</span><span>Email sa informacijama i terminima</span></li>
+      <li><span class="yr">korak 3</span><span>Dogovor fiksnih termina</span></li>
+      <li><span class="yr">korak 4</span><span>Uplata i prvi čas</span></li>
+    </ul>
+    <p>Probni čas košta 30 €, a paket od 8 časova 200 €. <a class="textlink" href="kursevi.html">Detalji</a></p>
+  </div>
+  <form class="signup" id="signup" novalidate>
+    <div class="form-row">
+      <div class="field"><label for="f-name">Ime i prezime</label><input id="f-name" name="ime" autocomplete="name" required></div>
+      <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+    </div>
+    <div class="form-row">
+      <div class="field"><label for="f-birth">Datum rođenja</label><input id="f-birth" name="datum_rodjenja" type="date"></div>
+      <div class="field"><label for="f-course">Kurs</label><select id="f-course" name="kurs"><option>Probni čas</option><option>Buđenje muzičkog sluha (početni)</option><option>Pravilna tehnika pevanja (napredni)</option><option>Pevačke tajne profesionalaca</option></select></div>
+    </div>
+    <fieldset class="field"><legend>Prethodno muzičko iskustvo</legend><div class="options"><label class="opt"><input type="radio" name="iskustvo" value="Ne" checked><span>Ne</span></label><label class="opt"><input type="radio" name="iskustvo" value="Da"><span>Da</span></label></div></fieldset>
+    <div class="field"><label for="f-genre">Koji žanr te najviše zanima?</label><input id="f-genre" name="zanr" placeholder="npr. pop, narodna, rock, etno"></div>
+    <fieldset class="field"><legend>24/7 Online Singing Support</legend><div class="options"><label class="opt"><input type="radio" name="podrska" value="Da" checked><span>Da</span></label><label class="opt"><input type="radio" name="podrska" value="Ne"><span>Ne</span></label></div></fieldset>
+    <fieldset class="field"><legend>Za časove sam saznao/la preko</legend><div class="options"><label class="opt"><input type="radio" name="izvor" value="Preporuke" checked><span>Preporuke</span></label><label class="opt"><input type="radio" name="izvor" value="Sajta"><span>Sajta</span></label><label class="opt"><input type="radio" name="izvor" value="Reklame"><span>Reklame</span></label><label class="opt"><input type="radio" name="izvor" value="Facebook-a"><span>Facebook-a</span></label><label class="opt"><input type="radio" name="izvor" value="Instagrama"><span>Instagrama</span></label><label class="opt"><input type="radio" name="izvor" value="TikTok-a"><span>TikTok-a</span></label></div></fieldset>
+    <label class="consent"><input type="checkbox" id="f-consent"> <span>Saglasan/na sam sa <a href="privatnost.html">Politikom privatnosti</a> i <a href="uslovi.html">Uslovima korišćenja</a> i sa tim da se moji podaci čuvaju i koriste za internet marketing.</span></label>
+    <button class="btn btn-primary" type="submit">Pošalji prijavu</button>
+    <p class="form-msg" id="form-msg" aria-live="polite"></p>
+  </form>
+</div></section>
+</main>
+<footer><div class="wrap">
+  <div class="cols">
+    <div style="display:grid;gap:14px;align-content:start">
+      <span class="logo"><span class="logo-keys" aria-hidden="true"><i></i><i></i><i></i></span><span>Časovi pevanja<small>sa Sanjom · online</small></span></span>
+      <p style="opacity:.75;max-width:40ch;font-size:.94rem">Online časovi pevanja za decu i odrasle, na srpskom, engleskom i nemačkom jeziku.</p>
+    </div>
+    <div><h4>Sajt</h4><ul>
+      <li><a href="o-sanji.html">O Sanji</a></li><li><a href="kursevi.html">Kursevi i cene</a></li>
+      <li><a href="prijava.html">Prijava</a></li><li><a href="vezbaonica.html">Vežbaonica</a></li>
+      <li><a href="saveti.html">Pevački saveti</a></li><li><a href="utisci.html">Utisci</a></li></ul></div>
+    <div><h4>Kontakt i mreže</h4><ul>
+      <li>Email: <span class="ph-inline">[dodati]</span></li>
+      <li>Instagram: <span class="ph-inline">[dodati]</span></li>
+      <li>TikTok: <span class="ph-inline">[dodati]</span></li>
+      <li><a href="https://www.youtube.com/watch?v=kQUhk-6FKRM" target="_blank" rel="noopener">YouTube ↗</a></li></ul></div>
+  </div>
+  <div class="bottom"><span>© <span data-year>2026</span> Časovi pevanja sa Sanjom. Sva prava zadržana.</span>
+    <span><a href="privatnost.html">Politika privatnosti</a> · <a href="uslovi.html">Uslovi korišćenja</a></span></div>
+</div></footer>
+<script src="site.js"></script>
+</body>
+</html>
