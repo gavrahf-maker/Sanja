@@ -106,9 +106,13 @@ POSTS = [
     ("Disanje", "Pravilno disanje prilikom pevanja", "Nama je vazduh gorivo. Vazduh je sve. Vazduh je pevačka moć. Bez vazduha nema pevanja."),
     ("Nastup", "Kako pobediti strah od javnog nastupa?", "Javni nastup može biti jedno stresno iskustvo ukoliko u glavi imamo negativna očekivanja."),
 ]
+import json, math
+ARTS = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "sadrzaj", "saveti.json"), encoding="utf-8"))
+SLUG = {a["title"]: a["slug"] for a in ARTS}
+def href(title): return f"savet-{SLUG[title]}.html"
 def pc(p):
     c, t, x = p
-    return f'<a class="post-card" href="clanak.html" data-cat="{c}"><span class="cat">{c}</span><h3>{E(t)}</h3><p>{E(x)}</p><span class="more">Pročitaj →</span></a>'
+    return f'<a class="post-card" href="{href(t)}" data-cat="{c}"><span class="cat">{c}</span><h3>{E(t)}</h3><p>{E(x)}</p><span class="more">Pročitaj →</span></a>'
 
 # ---------- POČETNA ----------
 home = f'''<section class="hero"><div class="wrap hero-grid">
@@ -346,8 +350,8 @@ practice = '''<section class="dark" style="padding-top:clamp(40px,6vw,80px)"><di
 <section><div class="wrap">
   <div class="sec-head"><span class="eyebrow">Pre nego što počneš</span><h2>Tri pravila za zdravo zagrevanje.</h2></div>
   <div class="grid-3">
-    <div class="card"><span class="tagline">disanje</span><h3>Vazduh je gorivo</h3><p>Udahni mirno i duboko pre svake fraze. Bez vazduha nema pevanja.</p><a class="textlink" href="clanak.html" style="justify-self:start">Pravilno disanje</a></div>
-    <div class="card"><span class="tagline">držanje</span><h3>Opušteno telo</h3><p>Stani prirodno, ramena dole, vrat slobodan. Napet mišić znači napet ton.</p><a class="textlink" href="clanak.html" style="justify-self:start">Držanje tela</a></div>
+    <div class="card"><span class="tagline">disanje</span><h3>Vazduh je gorivo</h3><p>Udahni mirno i duboko pre svake fraze. Bez vazduha nema pevanja.</p><a class="textlink" href="savet-pevacko-disanje.html" style="justify-self:start">Pravilno disanje</a></div>
+    <div class="card"><span class="tagline">držanje</span><h3>Opušteno telo</h3><p>Stani prirodno, ramena dole, vrat slobodan. Napet mišić znači napet ton.</p><a class="textlink" href="savet-drzanje-tela.html" style="justify-self:start">Držanje tela</a></div>
     <div class="card"><span class="tagline">mera</span><h3>Bez forsiranja</h3><p>Kad ton postane težak, stani i vrati se na početni ton. Visina dolazi sa vežbom.</p></div>
   </div>
   <p class="ph-note" style="margin-top:28px">ŠABLON: Sanja proverava vežbe i savete; po želji dodajemo nove vežbe (npr. sirena, staccato, intervali).</p>
@@ -363,22 +367,56 @@ blog = page_hero("Pevački saveti", "Saveti za pevače, od daha do scene.", "Kra
 </div></section>''' + CTA
 page("saveti.html", "Pevački saveti", "Saveti o disanju, tehnici pevanja, glasu i tremi od MA Sanje Trifunović Gerginov.", blog)
 
-# ---------- ČLANAK (šablon) ----------
-article = f'''<section><div class="wrap"><article class="article">
+# ---------- ČLANCI (iz sadrzaj/saveti.json) ----------
+def render_blocks(blocks):
+    out, k = [], 0
+    while k < len(blocks):
+        t = blocks[k][0]
+        if t == "li":
+            items = []
+            while k < len(blocks) and blocks[k][0] == "li": items.append(f"<li>{E(blocks[k][1])}</li>"); k += 1
+            out.append('<ul class="art-list">' + "".join(items) + "</ul>"); continue
+        if t == "step":
+            items = []
+            while k < len(blocks) and blocks[k][0] in ("step", "li"):
+                if blocks[k][0] == "step":
+                    items.append([E(blocks[k][1]), []])
+                else:
+                    items[-1][1].append(f"<li>{E(blocks[k][1])}</li>")
+                k += 1
+            out.append('<ol class="art-steps">' + "".join(f"<li><span>{s}</span>" + (f'<ul>{"".join(sub)}</ul>' if sub else "") + "</li>" for s, sub in items) + "</ol>"); continue
+        bl = blocks[k]
+        if t == "lead": out.append(f'<p class="art-lead">{E(bl[1])}</p>')
+        elif t == "p" and len(bl[1]) < 30 and bl[1].endswith(":"): out.append(f"<h3>{E(bl[1][:-1])}</h3>")
+        elif t == "p": out.append(f"<p>{E(bl[1])}</p>")
+        elif t == "pb": out.append(f"<p><strong>{E(bl[1])}</strong> {E(bl[2])}</p>")
+        elif t == "h2": out.append(f"<h2>{E(bl[1])}</h2>")
+        elif t == "h3": out.append(f"<h3>{E(bl[1])}</h3>")
+        elif t == "formula": out.append(f'<p class="formula">{" <span>→</span> ".join(E(x) for x in bl[1].split(" - "))}</p>')
+        elif t == "quote": out.append(f"<blockquote>{E(bl[1])}</blockquote>")
+        k += 1
+    return "\n  ".join(out)
+
+for n, a in enumerate(ARTS):
+    mins = max(1, math.ceil(a["words"] / 200))
+    prev, nxt = ARTS[n - 1], ARTS[(n + 1) % len(ARTS)]
+    excerpt = next((p[2] for p in POSTS if p[1] == a["title"]), "")
+    body = f"""<section><div class="wrap"><article class="article">
   <a class="textlink" href="saveti.html" style="justify-self:start">← Pevački saveti</a>
-  <span class="eyebrow">Učenje</span>
-  <h1 style="font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800;letter-spacing:-.035em">Koliko je časova potrebno da naučim da pevam?</h1>
-  <p class="meta">{TEACHER} · 18. 9. 2022.</p>
-  <p class="ph-note">ŠABLON STRANICE ZA ČLANAK: ovde ide pun Sanjin tekst sa starog sajta. Ispod je samo kratak pregled njenih glavnih tačaka.</p>
-  <p>Koliko brzo će učenik napredovati na časovima pevanja zavisi, zapravo, od nekoliko faktora.</p>
-  <h2>1. Znanje i metod profesora</h2><p>Jasno objašnjenje i dobar metod skraćuju put do rezultata.</p>
-  <h2>2. Sluh i osećaj za ritam</h2><p>Početnicima kojima je teško da čuju i ponove ton treba više vremena, ali se sluh razvija redovnim radom.</p>
-  <h2>3. Koliko vežbaš</h2><p>Najvažniji faktor. Preporuka je oko 30 minuta dnevno, a u gužvi bar 10 do 15 minuta.</p>
-  <blockquote>Ne pravi pauzu u vežbanju dužu od 24 sata.</blockquote>
-  <h2>4. Koliko često imaš časove</h2><p>Dva časa nedeljno, uz podršku između časova, daju najbrži napredak.</p>
-  <div class="btn-row" style="margin-top:12px"><a class="btn btn-rose" href="prijava.html">Prijavi se</a><a class="btn btn-ghost" href="vezbaonica.html">Vežbaj odmah</a></div>
-</article></div></section>'''
-page("clanak.html", "Koliko je časova potrebno da naučim da pevam?", "Od čega zavisi napredak na časovima pevanja.", article)
+  <span class="eyebrow">{E(a["cat"])} · {mins} min čitanja</span>
+  <h1 class="art-title">{E(a["title"])}</h1>
+  {render_blocks(a["blocks"])}
+  <p class="signature"><span>Vaša</span>Sanja Trifunović Gerginov</p>
+  <div class="btn-row"><a class="btn btn-rose" href="prijava.html">Prijavi se</a><a class="btn btn-ghost" href="vezbaonica.html">Vežbaj odmah</a></div>
+</article>
+<nav class="art-nav" aria-label="Drugi saveti">
+  <a href="{href(prev["title"])}"><small>← Prethodni</small>{E(prev["title"])}</a>
+  <a href="{href(nxt["title"])}" class="next"><small>Sledeći →</small>{E(nxt["title"])}</a>
+</nav></div></section>"""
+    page(f"savet-{a['slug']}.html", a["title"], excerpt or a["title"], body)
+
+# stari šablon članka preusmerava na listu saveta
+open(os.path.join(OUT, "clanak.html"), "w", encoding="utf-8").write('<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=saveti.html"><link rel="canonical" href="saveti.html"><a href="saveti.html">Pevački saveti</a>\n')
 
 # ---------- UTISCI ----------
 reviews = page_hero("Utisci", "Učenici iz šest zemalja.", "Srbija, Austrija, Nemačka, Švajcarska, Bosna i Hercegovina. Evo šta kažu oni koji već pevaju sa Sanjom.") + '''
