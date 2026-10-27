@@ -1,10 +1,46 @@
 /* Časovi pevanja sa Sanjom — zajednički skript */
 
-/* mobilni meni */
-document.querySelectorAll(".menu-btn").forEach(b => b.addEventListener("click", () => {
-  const nav = b.closest(".nav"), open = nav.classList.toggle("open");
-  b.setAttribute("aria-expanded", open); b.textContent = open ? "Zatvori" : "Meni";
-}));
+/* jezik stranice i prevodi poruka */
+const LANG = (document.documentElement.lang || "sr").slice(0, 2);
+const TXT = {
+  sr: { need: "Upiši ime i email da bi Sanja mogla da ti pošalje slobodne termine.", consent: "Potrebna je saglasnost sa Politikom privatnosti i Uslovima korišćenja.",
+        demo: "Ovo je šablon: forma još nije povezana sa email-om, pa prijava nije poslata.", stopped: "Stalo na" },
+  en: { need: "Enter your name and email so Sanja can send you the available times.", consent: "Please agree to the Privacy policy and Terms of use.",
+        demo: "This is a template: the form isn't connected to email yet, so nothing was sent.", stopped: "Stopped at" },
+  de: { need: "Gib deinen Namen und deine E-Mail an, damit Sanja dir freie Termine schicken kann.", consent: "Bitte stimme der Datenschutzerklärung und den Nutzungsbedingungen zu.",
+        demo: "Das ist eine Vorlage: Das Formular ist noch nicht mit E-Mail verbunden, daher wurde nichts gesendet.", stopped: "Gestoppt bei" }
+}[LANG] || {};
+
+/* mobilni meni (sendvič → X) */
+document.querySelectorAll(".menu-btn").forEach(b => {
+  const nav = b.closest(".nav");
+  const set = open => {
+    nav.classList.toggle("open", open);
+    b.setAttribute("aria-expanded", open);
+    b.setAttribute("aria-label", open ? b.dataset.close : b.dataset.open);
+  };
+  b.addEventListener("click", () => set(!nav.classList.contains("open")));
+  nav.querySelectorAll(".nav-links a").forEach(a => a.addEventListener("click", () => set(false)));
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && nav.classList.contains("open")) { set(false); b.focus(); } });
+  matchMedia("(min-width:1001px)").addEventListener("change", e => { if (e.matches) set(false); });
+});
+
+/* izbor jezika: klik na glavu note otvara tri ovala sa zastavicama */
+document.querySelectorAll(".lang-note").forEach(box => {
+  const btn = box.querySelector(".ln-btn"), opts = [...box.querySelectorAll(".ln-opt")];
+  const set = open => { box.classList.toggle("open", open); btn.setAttribute("aria-expanded", open); };
+  btn.addEventListener("click", () => {
+    const open = !box.classList.contains("open"); set(open);
+    if (open) setTimeout(() => (opts.find(o => o.getAttribute("aria-current") !== "true") || opts[0]).focus({ preventScroll: true }), 260);
+  });
+  document.addEventListener("click", e => { if (!box.contains(e.target)) set(false); });
+  box.addEventListener("keydown", e => {
+    if (e.key === "Escape") { set(false); btn.focus(); }
+    const i = opts.indexOf(document.activeElement);
+    if (i > -1 && (e.key === "ArrowRight" || e.key === "ArrowLeft")) { e.preventDefault(); opts[(i + (e.key === "ArrowRight" ? 1 : -1) + opts.length) % opts.length].focus(); }
+  });
+  box.addEventListener("focusout", e => { if (!box.contains(e.relatedTarget)) set(false); });
+});
 
 /* godina u podnožju */
 document.querySelectorAll("[data-year]").forEach(el => el.textContent = new Date().getFullYear());
@@ -23,9 +59,9 @@ if (form) form.addEventListener("submit", e => {
   e.preventDefault();
   const msg = document.getElementById("form-msg");
   const need = ["f-name", "f-email"].map(id => document.getElementById(id)).filter(i => !i.value.trim());
-  if (need.length) { msg.textContent = "Upiši ime i email da bi Sanja mogla da ti pošalje slobodne termine."; need[0].focus(); return; }
-  if (!document.getElementById("f-consent").checked) { msg.textContent = "Potrebna je saglasnost sa Politikom privatnosti i Uslovima korišćenja."; return; }
-  msg.textContent = "Ovo je šablon: forma još nije povezana sa email-om, pa prijava nije poslata.";
+  if (need.length) { msg.textContent = TXT.need; need[0].focus(); return; }
+  if (!document.getElementById("f-consent").checked) { msg.textContent = TXT.consent; return; }
+  msg.textContent = TXT.demo;
 });
 
 /* ===== Vežbaonica: klavir + vežbe ===== */
@@ -90,7 +126,7 @@ if (piano) {
   }));
 
   const startSel = document.getElementById("start"), tempo = document.getElementById("tempo"), solf = document.getElementById("solf");
-  const nameOf = m => NAMES[m % 12] + (Math.floor(m / 12) - 1);
+  const nameOf = m => (LANG === "de" && m % 12 === 11 ? "H" : NAMES[m % 12]) + (Math.floor(m / 12) - 1);  // na nemačkom je B = H
   let timer = null, root = +startSel.value;
   function markRoot() { Object.values(keys).forEach(k => k.classList.remove("root")); keys[root] && keys[root].classList.add("root"); }
   function show(i = -1) {
@@ -117,7 +153,7 @@ if (piano) {
   }
   startSel.addEventListener("change", () => { root = +startSel.value; stop(); show(); });
   document.getElementById("play").addEventListener("click", () => { root = +startSel.value; run(); });
-  document.getElementById("stop").addEventListener("click", () => { stop(); solf.innerHTML = `Stalo na: <b>${nameOf(root)}</b>`; });
+  document.getElementById("stop").addEventListener("click", () => { stop(); solf.innerHTML = `${TXT.stopped}: <b>${nameOf(root)}</b>`; });
   show();
 }
 
