@@ -122,8 +122,11 @@ def FOOTER():
       <li>TikTok: <span class="ph-inline">[dodati]</span></li>
       <li><a href="{VIDEO}" target="_blank" rel="noopener">YouTube ↗</a></li></ul></div>
   </div>
-  <div class="bottom"><span>© <span data-year>2026</span> {SITE()}. {t("Sva prava zadržana.", "All rights reserved.", "Alle Rechte vorbehalten.")}</span>
-    <span><a href="privatnost.html">{t("Politika privatnosti", "Privacy policy", "Datenschutz")}</a> · <a href="uslovi.html">{t("Uslovi korišćenja", "Terms of use", "Nutzungsbedingungen")}</a></span></div>
+  <div class="bottom">
+    <div class="legal"><span>© <span data-year>2026</span> {SITE()}. {t("Sva prava zadržana.", "All rights reserved.", "Alle Rechte vorbehalten.")}</span>
+      <span><a href="privatnost.html">{t("Politika privatnosti", "Privacy policy", "Datenschutz")}</a> · <a href="uslovi.html">{t("Uslovi korišćenja", "Terms of use", "Nutzungsbedingungen")}</a></span></div>
+    <p class="credit"><span>{t("Dizajn i izrada sajta", "Website design &amp; development", "Webdesign &amp; Umsetzung")}</span><img src="{R}img/designare-dark.png" width="600" height="166" alt="deSignare" loading="lazy"></p>
+  </div>
 </div></footer>
 <script src="{R}site.js"></script>'''
 

@@ -351,7 +351,12 @@ footer h4{margin:0 0 10px;font-family:var(--label);font-size:.74rem;letter-spaci
 footer ul{list-style:none;padding:0;margin:0;display:grid;gap:6px;font-size:.94rem}
 footer a{text-decoration:none;opacity:.85}
 footer a:hover{opacity:1}
-footer .bottom{margin-top:36px;padding-top:20px;border-top:1px solid #2E2933;font-size:.85rem;opacity:.65;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+footer .bottom{margin-top:36px;padding-top:20px;border-top:1px solid #2E2933;font-size:.85rem;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px 28px}
+footer .legal{display:flex;flex-wrap:wrap;gap:6px 24px;opacity:.65}
+/* potpis izvođača: logo deSignare (svetla slova + zlatno S, jer je podnožje tamno u obe teme) */
+footer .credit{display:flex;align-items:center;gap:12px;margin:0}
+footer .credit span{font-family:var(--label);font-weight:700;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;opacity:.55}
+footer .credit img{height:26px;width:auto;display:block;transform:translateY(-1px)}
 @media (max-width:760px){ footer .cols{grid-template-columns:1fr} }
 .ph-inline{font-family:var(--label);font-size:.82rem;color:var(--rose-on-dark);opacity:1}
 input[type="range"]{accent-color:var(--rose-on-dark)}
