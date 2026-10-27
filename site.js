@@ -120,3 +120,34 @@ if (piano) {
   document.getElementById("stop").addEventListener("click", () => { stop(); solf.innerHTML = `Stalo na: <b>${nameOf(root)}</b>`; });
   show();
 }
+
+/* ===== Baner galerije (O Sanji): pomeranje za kursorom + prozor za pregled ===== */
+const banner = document.querySelector("[data-gallery-open]"), lb = document.getElementById("lightbox");
+if (banner && lb) {
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  banner.addEventListener("pointermove", e => {
+    if (still || e.pointerType !== "mouse") return;
+    const r = banner.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    banner.style.setProperty("--ry", (x - .5) * 10 + "deg"); banner.style.setProperty("--rx", (.5 - y) * 8 + "deg");
+    banner.style.setProperty("--mx", x * 100 + "%"); banner.style.setProperty("--my", y * 100 + "%");
+  });
+  banner.addEventListener("pointerleave", () => { banner.style.setProperty("--rx", "0deg"); banner.style.setProperty("--ry", "0deg"); });
+
+  const thumbs = [...lb.querySelectorAll(".lb-thumbs button")], img = lb.querySelector("#lb-img"), cap = lb.querySelector("#lb-cap");
+  let i = 0;
+  function show(n) {
+    i = (n + thumbs.length) % thumbs.length; const t = thumbs[i];
+    img.src = t.dataset.src; img.alt = t.querySelector("img").alt; cap.textContent = `${i + 1} / ${thumbs.length}`;
+    thumbs.forEach((b, k) => b.setAttribute("aria-current", k === i));
+  }
+  function open() { show(0); document.documentElement.classList.add("lb-lock"); lb.showModal(); }
+  function close() { lb.close(); }
+  lb.addEventListener("close", () => document.documentElement.classList.remove("lb-lock"));
+  banner.addEventListener("click", open);
+  lb.querySelector(".lb-close").addEventListener("click", close);
+  lb.querySelector(".lb-prev").addEventListener("click", () => show(i - 1));
+  lb.querySelector(".lb-next").addEventListener("click", () => show(i + 1));
+  thumbs.forEach((b, k) => b.addEventListener("click", () => show(k)));
+  lb.addEventListener("click", e => { if (e.target === lb) close(); });  // klik van prozora zatvara
+  lb.addEventListener("keydown", e => { if (e.key === "ArrowLeft") show(i - 1); if (e.key === "ArrowRight") show(i + 1); });
+}

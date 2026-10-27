@@ -14,7 +14,7 @@ NAV = [("index.html", "Početna"), ("o-sanji.html", "O Sanji"), ("kursevi.html",
 
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
          '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">')
+         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@500;600;700&display=swap">')
 
 LOGO = f'<span class="logo-keys" aria-hidden="true"><i></i><i></i><i></i></span><span>Časovi pevanja<small>sa Sanjom · online</small></span>'
 
@@ -57,14 +57,15 @@ FOOTER = f'''<footer><div class="wrap">
 </div></footer>
 <script src="site.js"></script>'''
 
+
 DOC_START = '<!doctype html>\n<html lang="sr-Latn">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
 
 def page(fname, title, desc, body, root=False):
     h = head(title, desc)
     if root and ARTIFACT:  # početna u Artifact pregledu: Artifact sam dodaje doctype/head/body
-        out = h + header(fname) + "\n<main>\n" + body + "\n</main>\n" + FOOTER
+        out = h + header(fname) + "\n<main>\n" + body + "\n</main>\n" + FOOTER + ""
     else:
-        out = (DOC_START + h + "</head>\n<body>\n" + header(fname) + "\n<main>\n" + body + "\n</main>\n" + FOOTER + "\n</body>\n</html>\n")
+        out = (DOC_START + h + "</head>\n<body>\n" + header(fname) + "\n<main>\n" + body + "\n</main>\n" + (FOOTER + "") + "\n</body>\n</html>\n")
     open(os.path.join(OUT, fname), "w", encoding="utf-8").write(out)
 
 def page_hero(eyebrow, h1, lead):
@@ -179,6 +180,15 @@ about = page_hero("O Sanji", "Glas, scena i 15 godina u učionici.", "Vokalni pe
 <section><div class="wrap split">
   <div style="display:grid;gap:14px">
     <figure class="about-photo"><img src="img/sanja.jpg" alt="Sanja Trifunović Gerginov pored klavijature, sa peharom" loading="lazy"></figure>
+    <button class="gal-banner" type="button" data-gallery-open aria-haspopup="dialog">
+      <span class="gb-text"><span class="gb-kicker">Galerija</span><span class="gb-title">Sanja iza klavijature</span><span class="gb-cta">3 fotografije · pogledaj →</span></span>
+      <span class="gb-stack" aria-hidden="true">
+        <img src="img/galerija/3.jpg" alt="" style="object-position:50% 40%">
+        <img src="img/galerija/2.jpg" alt="" style="object-position:50% 30%">
+        <img src="img/galerija/1.jpg" alt="" style="object-position:72% 40%">
+      </span>
+      <span class="gb-shine" aria-hidden="true"></span>
+    </button>
   </div>
   <div class="prose">
     <p><strong>{TEACHER}</strong> profesionalno se bavi pevanjem od 2004. godine. Priznati je vokalni izvođač, sa nagradama u zemlji i inostranstvu.</p>
@@ -195,6 +205,20 @@ about = page_hero("O Sanji", "Glas, scena i 15 godina u učionici.", "Vokalni pe
   </div>
 </div></section>
 
+
+<dialog class="lightbox" id="lightbox" aria-label="Galerija fotografija">
+  <div class="lb-inner">
+    <button class="lb-close" type="button" aria-label="Zatvori galeriju">×</button>
+    <figure class="lb-main"><img id="lb-img" src="img/galerija/1.jpg" alt=""><figcaption id="lb-cap"></figcaption></figure>
+    <button class="lb-arrow lb-prev" type="button" aria-label="Prethodna fotografija">‹</button>
+    <button class="lb-arrow lb-next" type="button" aria-label="Sledeća fotografija">›</button>
+    <div class="lb-thumbs">
+      <button type="button" data-src="img/galerija/1.jpg"><img src="img/galerija/1.jpg" alt="Sanja za klavijaturom sa čarobnim štapićem"></button>
+      <button type="button" data-src="img/galerija/2.jpg"><img src="img/galerija/2.jpg" alt="Sanja u belom sakou, nasmejana"></button>
+      <button type="button" data-src="img/galerija/3.jpg"><img src="img/galerija/3.jpg" alt="Sanja pored klavijature, sa peharom"></button>
+    </div>
+  </div>
+</dialog>
 <section class="dark"><div class="wrap">
   <div class="sec-head"><span class="eyebrow">Metoda</span><h2>24/7 Online Singing Support</h2>
     <p class="lead">Napredak se ne dešava samo na času. Zato Sanja prati tvoje vežbanje i između časova.</p></div>
