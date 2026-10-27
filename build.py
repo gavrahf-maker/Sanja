@@ -43,6 +43,8 @@ def lang_href(cur, target):
     return R + LANG_DIR[target] + cur
 
 def oval(lang):
+    if lang == "sr":  # državna zastava Srbije sa grbom (slika)
+        return f'<span class="oval"><img src="{R}img/zastava-sr.png" alt="" width="240" height="177"></span>'
     return f'<span class="oval">{FLAG[lang]}</span>'
 
 def lang_note(cur):
@@ -303,7 +305,7 @@ def build():
     <div class="btn-row"><a class="btn btn-rose" href="prijava.html">{t("Prijavi se", "Sign up", "Anmelden")}</a><a class="btn btn-ghost" href="vezbaonica.html">{t("Isprobaj Vežbaonicu →", "Try the Practice room →", "Übungsraum ausprobieren →")}</a></div>
     <div class="chips"><span class="chip">{t("narodna", "folk", "Volksmusik")}</span><span class="chip">pop</span><span class="chip">rock</span><span class="chip">{t("etno", "ethno", "Ethno")}</span><span class="chip">SR · EN · DE</span></div>
   </div>
-  <div class="hero-photo"><img src="{R}img/klavir.jpg" alt="{t("Otvorene note na klaviru, iza njih mehanika klavira i osušeni božur", "Open sheet music on a piano, with the piano action and a dried peony behind it", "Aufgeschlagene Noten auf einem Klavier, dahinter die Klaviermechanik und eine getrocknete Pfingstrose")}">
+  <div class="hero-photo"><img src="{R}img/cas.jpg" width="1068" height="1600" alt="{t("Čas pevanja: devojčica peva u mikrofon, profesorka je prati sedeći pored otvorenog klavira", "A singing lesson: a girl sings into a microphone while the teacher guides her, seated beside an open piano", "Gesangsstunde: Ein Mädchen singt ins Mikrofon, die Lehrerin begleitet sie neben einem offenen Klavier")}">
     <div class="hero-badge"><span class="live-dot" aria-hidden="true"></span><span><strong>{TEACHER}</strong><br>{t("vokalni pedagog, Beč", "vocal coach, Vienna", "Gesangspädagogin, Wien")}</span></div></div>
 </div></section>
 <div class="facts"><div class="wrap">
